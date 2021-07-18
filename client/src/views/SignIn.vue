@@ -29,24 +29,30 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 export default {
   name: "singin",
   components: {},
-  data () {
+  data() {
     return {
       form: {
-        email: '',
-        password: ''
-      }
-    }
+        email: "",
+        password: "",
+      },
+    };
   },
   methods: {
     ...mapActions({
-      signIn: 'auth/signIn'
+      signIn: "auth/signIn",
     }),
     submit() {
-      this.signIn(this.form)
+      this.signIn(this.form).then(() => {
+        this.$router.replace({
+          name: "dashboard",
+        })
+      }).catch(() => {
+        console.log('failed')
+      })
     },
   },
 };
