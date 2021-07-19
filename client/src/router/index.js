@@ -3,6 +3,9 @@ import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
 import ModifyUser from '../views/ModifyUser.vue'
 import CreateUser from '../views/CreateUser.vue'
+import CompanyDashboard from '../views/CompanyList.vue'
+import ModifyCompany from '../views/CompanyEdit.vue'
+import CreateCompany from '../views/CompanyCreate.vue'
 import store from '@/store'
 
 const routes = [
@@ -41,6 +44,37 @@ const routes = [
     path: '/user/create',
     name: 'createuser',
     component: CreateUser,
+  },
+  {
+    path: '/company-dashboard',
+    name: 'companydashboard',
+    component: CompanyDashboard,
+    beforeEnter: (to, from, next) => {
+      if (!store.getters['auth/authenticated']) {
+        return next({
+          name: 'home'
+        })
+      }
+      next()
+    }
+  },
+  {
+    path: '/company/edit',
+    name: 'editcompany',
+    component: ModifyCompany,
+    beforeEnter: (to, from, next) => {
+      if (!store.getters['company/editCompany']) {
+        return next({
+          name: 'companydashboard'
+        })
+      }
+      next()
+    }
+  },
+  {
+    path: '/company/create',
+    name: 'createcompany',
+    component: CreateCompany,
   },
 ]
 

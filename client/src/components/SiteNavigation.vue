@@ -24,7 +24,13 @@
         <template v-if="authenticated">
           <li class="nav-item">
             <router-link :to="{ name: 'dashboard' }" class="nav-link">
-              Dashboard
+              User List
+            </router-link>
+          </li>
+
+          <li class="nav-item">
+            <router-link :to="{ name: 'companydashboard' }" class="nav-link">
+              Company List
             </router-link>
           </li>
 
