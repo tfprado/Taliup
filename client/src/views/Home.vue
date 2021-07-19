@@ -1,10 +1,18 @@
 <template>
-  <div class="container mt-3">
+  <div>
     <template v-if="authenticated">
       <h1 class="text-center">Welcome {{ user.name }}</h1>
     </template>
     <template v-else>
       <form @submit.prevent="submit">
+        <div class="alert alert-danger" role="alert" v-if="errors">
+          {{ errorMessage }}
+          <ul>
+            <li v-for="(error, index) in errors" :key="`error-${index}`">
+              {{ error[0] }}
+            </li>
+          </ul>
+        </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
           <input
@@ -35,7 +43,6 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import {  } from "vuex";
 export default {
   name: "singin",
   components: {},
@@ -51,6 +58,8 @@ export default {
     ...mapGetters({
       authenticated: "auth/authenticated",
       user: "auth/user",
+      errorMessage: "auth/errorMessage",
+      errors: "auth/errors",
     }),
   },
   methods: {
