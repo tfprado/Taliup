@@ -108,7 +108,6 @@ export default {
   },
   created() {
     this.clearMessages();
-    this.getUsersAction();
   },
 };
 </script>
