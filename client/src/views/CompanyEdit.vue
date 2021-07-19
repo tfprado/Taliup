@@ -26,41 +26,6 @@
             v-model="form.name"
           />
         </div>
-        <div class="col col-md-6">
-          <label for="exampleInputEmail1">Email address</label>
-          <input
-            class="form-control"
-            id="email"
-            name="email"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-            v-model="form.email"
-          />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col col-md-6">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            placeholder="Password"
-            v-model="form.password"
-          />
-        </div>
-         <div class="col col-md-6">
-          <label for="passwordConfirmation">Password confirmation</label>
-          <input
-            type="password"
-            class="form-control"
-            id="passwordConfirmation"
-            name="passwordConfirmation"
-            placeholder="Password"
-            v-model="form.passwordConfirmation"
-          />
-        </div>
       </div>
       <button type="submit" class="btn btn-primary mt-5">Submit</button>
     </form>

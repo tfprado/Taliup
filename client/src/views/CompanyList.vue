@@ -15,6 +15,7 @@
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Name</th>
+          <th scope="col">Add Users</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
@@ -23,6 +24,11 @@
         <tr v-for="(company, index) in companies" :key="company.id">
           <th scope="row">{{ company.id }}</th>
           <td>{{ company.name }}</td>
+          <td><button
+              class="btn btn-primary"
+            >
+                Add Users
+            </button></td>
           <td>
             <button
               class="btn btn-warning"
@@ -55,8 +61,8 @@ export default {
   methods: {
     ...mapActions({
       getCompaniesAction: "company/getCompanies",
-      getEditcompanyAction: "company/getEditCompany",
-      deletecompanyAction: "company/deleteCompany",
+      getEditCompanyAction: "company/getEditCompany",
+      deleteCompanyAction: "company/deleteCompany",
       clearMessages: "company/clearMessages"
     }),
     redirectToEditPage(companyId) {

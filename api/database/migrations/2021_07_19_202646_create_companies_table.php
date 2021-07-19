@@ -17,7 +17,6 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->text('description');
         });
 
         factory(App\Company::class, 10)->create();

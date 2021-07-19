@@ -14,7 +14,7 @@ export default {
             return state.companies
         },
         editCompany(state) {
-            return state.editcompany
+            return state.editCompany
         },
         errors(state) {
             return state.errors
@@ -54,7 +54,7 @@ export default {
     actions: {
         async getCompanies({ commit }) {
             try {
-                axios.get('company/companies').then((response) => {
+                axios.get('company/index').then((response) => {
                     commit('SET_COMPANIES', response.data.companies.data)
                 })
             } catch (error) {
@@ -66,6 +66,7 @@ export default {
         async getEditCompany({ commit }, companyId) {
             try {
                 axios.get('company/show/' + companyId).then((response) => {
+                    console.log("SUCC: ", response.data);
                     commit('SET_EDIT_COMPANY', response.data.company)
                 })
             } catch (error) {
@@ -75,7 +76,7 @@ export default {
             }
         },
         async editCompany({ commit }, form) {
-            axios.post('company/edit', form).then((response) => {
+            axios.post('company/update', form).then((response) => {
                 commit('SET_EDIT_COMPANY', response.data.company)
                 commit('SET_SUCCESS', 'COMPANY Updated!')
                 commit('SET_ERRORS', null)
@@ -97,7 +98,7 @@ export default {
             });
         },
         async deleteCompany({ commit }, id) {
-            axios.post('company/delete/' + id).then((response) => {
+            axios.post('company/destroy/' + id).then((response) => {
                 commit('SET_EDIT_COMPANY', response.data.company)
                 commit('SET_SUCCESS', 'Company Deleted!')
                 commit('SET_ERRORS', null)

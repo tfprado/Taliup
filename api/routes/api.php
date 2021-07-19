@@ -32,3 +32,11 @@ Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
     Route::post('create', 'UserController@createUser');
     Route::post('delete/{id}', 'UserController@deleteUser');
 });
+
+Route::group(['prefix' => 'company'], function () {
+    Route::get('index', 'CompanyController@index');
+    Route::get('show/{id}', 'CompanyController@show');
+    Route::post('create', 'CompanyController@store');
+    Route::post('update', 'CompanyController@update');
+    Route::post('destroy/{id}', 'CompanyController@destroy');
+});

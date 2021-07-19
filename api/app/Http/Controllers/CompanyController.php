@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use Illuminate\Http\Request;
+use App\Http\Resources\CompanyResource;
+use App\Http\Resources\CompanyCollection;
 
 class CompanyController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth:api']);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,17 +27,43 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = new CompanyCollection(Company::all());
+        return response()->json(compact('companies'));
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Company  $company
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $company = new CompanyResource(Company::findOrFail($id));
+        return response()->json(compact('company'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function update(Request $request)
     {
-        //
+        // validate fields that are always required
+        $validated = $request->validate([
+            'id'    =>  'required',
+            'name' => 'required',
+        ]);
+
+        $company = Company::where('id', '=', $request->input('id'))->firstOrFail();
+        $company->name = $request->input('name');
+        $company->save();
+
+        return response()->json(compact('company'));
+
     }
 
     /**
@@ -35,41 +74,15 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'name' => 'required',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Company $company)
-    {
-        //
-    }
+        $company = new Company;
+        $company->name = $request->input('name');
+        $company->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Company $company)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Company $company)
-    {
-        //
+        return response()->json(compact('company'));
     }
 
     /**
@@ -78,8 +91,10 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy($id) 
     {
-        //
+        $company = Company::where('id', '=', $id)->firstOrFail();
+        $company->delete();
+        return response()->json(compact('company'));
     }
 }
