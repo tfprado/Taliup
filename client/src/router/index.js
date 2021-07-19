@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import SignIn from '../views/SignIn.vue'
 import Dashboard from '../views/Dashboard.vue'
+import store from '@/store'
 
 const routes = [
   {
@@ -10,14 +10,17 @@ const routes = [
     component: Home
   },
   {
-    path: '/signin',
-    name: 'singin',
-    component: SignIn
-  },
-  {
     path: '/dashboard',
     name: 'dashboard',
-    component: Dashboard
+    component: Dashboard,
+    beforeEnter: (to, from, next) => {
+      if (!store.getters['auth/authenticated']) {
+        return next ({
+          name: 'home'
+        })
+      }
+      next()
+    }
   },
 ]
 

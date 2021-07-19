@@ -33,14 +33,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Sign Out</a>
-          </li>
-        </template>
-        <template v-else>
-          <li class="nav-item">
-            <router-link :to="{ name: 'singin' }" class="nav-link">
-              Sign In
-            </router-link>
+            <a class="nav-link" href="#" @click.prevent="signOut">Sign Out</a>
           </li>
         </template>
       </ul>
@@ -49,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters({
@@ -57,5 +50,18 @@ export default {
       user: "auth/user",
     }),
   },
+  methods: {
+    ...mapActions({
+      signOutAction: 'auth/signOut'
+    }),
+
+    signOut () {
+      this.signOutAction().then(() => {
+        this.$router.replace({
+          name: 'home'
+        })
+      })
+    },
+  }
 };
 </script>
