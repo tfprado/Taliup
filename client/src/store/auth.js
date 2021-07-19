@@ -5,7 +5,9 @@ export default {
     state: {
         token: null,
         user: null,
-        users: []
+        users: [],
+        errorMessage: null,
+        errors: null
     },
     getters: {
         authenticated (state) {
@@ -16,6 +18,12 @@ export default {
         },
         users(state) {
             return state.users
+        },
+        errors(state) {
+            return state.errors
+        },
+        errorMessage(state) {
+            return state.errorMessage
         }
     },
     mutations: {
@@ -27,13 +35,20 @@ export default {
         },
         SET_USERS(state, data) {
             state.users = data
+        },
+        SET_ERRORS(state, data) {
+            state.errorMessage = data.message
+            state.errors = data.errors
         }
     },
     actions: {
-        async signIn({ dispatch }, credentials) {
+        async signIn({ dispatch, commit }, credentials) {
             axios.post('auth/signin', credentials).then((response) => {
                 dispatch('attempt', response.data.token)
-            })
+            }).catch(error => {
+                console.log("ERRRR:: ", error.response.data);
+                commit('SET_ERRORS', error.response.data)
+            });
         },
         async attempt({ commit, state }, token) {
             if (token){

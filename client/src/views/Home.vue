@@ -5,6 +5,14 @@
     </template>
     <template v-else>
       <form @submit.prevent="submit">
+        <div class="alert alert-danger" role="alert" v-if="errors">
+          {{ errorMessage }}
+          <ul>
+            <li v-for="(error, index) in errors" :key="`error-${index}`">
+              {{ error[0] }}
+            </li>
+          </ul>
+        </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
           <input
@@ -50,6 +58,8 @@ export default {
     ...mapGetters({
       authenticated: "auth/authenticated",
       user: "auth/user",
+      errorMessage: "auth/errorMessage",
+      errors: "auth/errors",
     }),
   },
   methods: {
