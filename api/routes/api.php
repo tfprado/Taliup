@@ -24,4 +24,5 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('signout', 'SignOutController');
     
     Route::get('me', 'MeController');
+    Route::get('users', 'UserController@index');
 });

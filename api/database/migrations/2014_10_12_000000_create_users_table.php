@@ -22,6 +22,13 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        $admin = factory(App\User::class)->create([
+            'email' => 'admin@gmail.com',
+            'name' => 'admin person',
+            'password' => 'adminpassword'
+        ]);
+        $users = factory(App\User::class, 10)->create();
     }
 
     /**

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div>
     <template v-if="authenticated">
       <h1 class="text-center">Welcome {{ user.name }}</h1>
     </template>
@@ -35,7 +35,6 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import {  } from "vuex";
 export default {
   name: "singin",
   components: {},

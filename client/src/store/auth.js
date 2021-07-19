@@ -4,7 +4,8 @@ export default {
     namespaced: true,
     state: {
         token: null,
-        user: null
+        user: null,
+        users: []
     },
     getters: {
         authenticated (state) {
@@ -13,6 +14,9 @@ export default {
         user(state) {
             return state.user
         },
+        users(state) {
+            return state.users
+        }
     },
     mutations: {
         SET_TOKEN(state, token) {
@@ -20,6 +24,9 @@ export default {
         },
         SET_USER(state, data) {
             state.user = data
+        },
+        SET_USERS(state, data) {
+            state.users = data
         }
     },
     actions: {
@@ -52,6 +59,16 @@ export default {
                 commit('SET_TOKEN', null)
                 commit('SET_USER', null)
             })
+        },
+        async getUsers({ commit }) {
+            try {
+                axios.get('auth/users').then((response) => {
+                    commit('SET_USERS', response.data.users.data)
+                })
+            } catch (e) {
+                commit('SET_USERS', null)
+                throw new Error(e);
+            }
         }
     },
 }
