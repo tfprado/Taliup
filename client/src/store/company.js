@@ -66,7 +66,17 @@ export default {
         async getEditCompany({ commit }, companyId) {
             try {
                 axios.get('company/show/' + companyId).then((response) => {
-                    console.log("SUCC: ", response.data);
+                    commit('SET_EDIT_COMPANY', response.data.company)
+                })
+            } catch (error) {
+                console.log("ERRRR:: ", error.response.data);
+                commit('SET_COMPANIES', null)
+                commit('SET_ERRORS', error.response.data)
+            }
+        },
+        async getEditCompanyRelation({ commit }, companyId) {
+            try {
+                axios.get('company/show/user/' + companyId).then((response) => {
                     commit('SET_EDIT_COMPANY', response.data.company)
                 })
             } catch (error) {
@@ -79,6 +89,22 @@ export default {
             axios.post('company/update', form).then((response) => {
                 commit('SET_EDIT_COMPANY', response.data.company)
                 commit('SET_SUCCESS', 'COMPANY Updated!')
+                commit('SET_ERRORS', null)
+            }).catch(error => {
+                console.log("ERRRR:: ", error.response.data);
+                commit('SET_ERRORS', error.response.data)
+                commit('SET_SUCCESS', null)
+            });
+        },
+        async editRelation({ commit, getters }, form) {
+            console.log(getters.editCompany);
+            console.log(form);
+            console.log({ company: getters.editCompany, form });
+            axios.post('company/update/relation', {
+                headers: {
+                    'content-type': 'application/json'
+                }, company: getters.editCompany, form}).then((response) => {
+                console.log(response);
                 commit('SET_ERRORS', null)
             }).catch(error => {
                 console.log("ERRRR:: ", error.response.data);
