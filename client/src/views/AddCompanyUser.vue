@@ -2,6 +2,17 @@
   <div>
     <h1 v-if="company">Add users to {{ company.name }}</h1>
     <form v-if="users" id="relation-form">
+      <div class="alert alert-success" role="alert" v-if="successMessage">
+        <h2>{{ successMessage }}</h2>
+      </div>
+      <div class="alert alert-danger" role="alert" v-if="errors">
+        {{ errorMessage }}
+        <ul>
+          <li v-for="(error, index) in errors" :key="`error-${index}`">
+            {{ error[0] }}
+          </li>
+        </ul>
+      </div>
       <input type="hidden" name="id" id="id" v-model="company.id" />
       <div class="form-check" v-for="user in users" :key="user.id">
         <input

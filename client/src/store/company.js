@@ -103,8 +103,8 @@ export default {
             axios.post('company/update/relation', {
                 headers: {
                     'content-type': 'application/json'
-                }, company: getters.editCompany, form}).then((response) => {
-                console.log(response);
+                }, company: getters.editCompany, form}).then(() => {
+                commit('SET_SUCCESS', 'Users Added to Company!')
                 commit('SET_ERRORS', null)
             }).catch(error => {
                 console.log("ERRRR:: ", error.response.data);
