@@ -6,6 +6,7 @@ import CreateUser from '../views/CreateUser.vue'
 import CompanyDashboard from '../views/CompanyList.vue'
 import ModifyCompany from '../views/CompanyEdit.vue'
 import CreateCompany from '../views/CompanyCreate.vue'
+import AddCompanyUser from '../views/AddCompanyUser.vue'
 import store from '@/store'
 
 const routes = [
@@ -75,6 +76,19 @@ const routes = [
     path: '/company/create',
     name: 'createcompany',
     component: CreateCompany,
+  },
+  {
+    path: '/company/relations',
+    name: 'addcompanyuser',
+    component: AddCompanyUser,
+    beforeEnter: (to, from, next) => {
+      if (!store.getters['company/editCompany']) {
+        return next({
+          name: 'companydashboard'
+        })
+      }
+      next()
+    }
   },
 ]
 

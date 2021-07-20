@@ -44,10 +44,21 @@ class CompanyController extends Controller
     }
 
     /**
+     * Display the specified resource with user relation.
+     *
+     * @param  \App\Company  $company
+     * @return \Illuminate\Http\Response
+     */
+    public function showWithUsers($id)
+    {
+        $company = new CompanyResource(Company::with('users')->findOrFail($id));
+        return response()->json(compact('company'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -60,6 +71,26 @@ class CompanyController extends Controller
 
         $company = Company::where('id', '=', $request->input('id'))->firstOrFail();
         $company->name = $request->input('name');
+        $company->save();
+
+        return response()->json(compact('company'));
+
+    }
+
+    /**
+     * Update the specified resource relations.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateRelation(Request $request)
+    {
+        $validated = $request->validate([
+            'company.id'    =>  'required',
+        ]);
+
+        $company = Company::where('id', '=', $request->input('company.id'))->firstOrFail();
+        $company->users()->attach($request->input('form'));
         $company->save();
 
         return response()->json(compact('company'));

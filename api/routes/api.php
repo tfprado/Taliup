@@ -36,7 +36,10 @@ Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
 Route::group(['prefix' => 'company'], function () {
     Route::get('index', 'CompanyController@index');
     Route::get('show/{id}', 'CompanyController@show');
+    Route::get('show/users/{id}', 'CompanyController@showWithUsers');
+
     Route::post('create', 'CompanyController@store');
     Route::post('update', 'CompanyController@update');
+    Route::post('update/relation', 'CompanyController@updateRelation');
     Route::post('destroy/{id}', 'CompanyController@destroy');
 });

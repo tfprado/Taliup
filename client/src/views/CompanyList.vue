@@ -26,6 +26,7 @@
           <td>{{ company.name }}</td>
           <td><button
               class="btn btn-primary"
+              @click.prevent="redirectToRelationPage(company.id)"
             >
                 Add Users
             </button></td>
@@ -68,6 +69,11 @@ export default {
     redirectToEditPage(companyId) {
       this.getEditCompanyAction(companyId).then(() => {
         this.$router.replace({ name: "editcompany"});
+      });
+    },
+    redirectToRelationPage(companyId) {
+      this.getEditCompanyAction(companyId).then(() => {
+        this.$router.replace({ name: "addcompanyuser"});
       });
     },
     deleteCompany(id, index) {
