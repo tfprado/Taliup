@@ -32,7 +32,7 @@ class UserController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function editUser(Request $request)
+    public function edit(Request $request)
     {
         // validate fields that are always required
         $validated = $request->validate([
@@ -64,7 +64,7 @@ class UserController extends Controller
 
     }
 
-    public function createUser(Request $request)
+    public function create(Request $request)
     {
         $validated = $request->validate([
             'email' => 'required|email|unique:App\User,email',
@@ -83,7 +83,7 @@ class UserController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function deleteUser($id) 
+    public function destroy($id) 
     {
         $user = User::where('id', '=', $id)->firstOrFail();
         $user->delete();

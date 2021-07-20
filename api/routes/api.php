@@ -28,9 +28,9 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
 Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
     Route::get('users', 'UserController@index');
     Route::get('show/{id}', 'UserController@show');
-    Route::post('edit', 'UserController@editUser');
-    Route::post('create', 'UserController@createUser');
-    Route::post('delete/{id}', 'UserController@deleteUser');
+    Route::post('edit', 'UserController@edit');
+    Route::post('create', 'UserController@create');
+    Route::post('delete/{id}', 'UserController@destroy');
 });
 
 Route::group(['prefix' => 'company'], function () {
